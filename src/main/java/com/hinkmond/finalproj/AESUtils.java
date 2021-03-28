@@ -100,7 +100,7 @@ class AESUtils {
 
     public static void main(String... args) {
         // Add your password in between the quotes, run this main, copy the encrypted password, then delete.
-        String origStr = args.length == 0 ? "<Add password here, then remove when done>" : args[1];
+        String origStr = args.length == 0 ? "ucscSV2021W#" : args[1];
         if (!(origStr.equals(""))) {
             AESUtils aesUtils = new AESUtils();
             System.err.println(aesUtils.encrypt(origStr,"./keyFile.key"));
