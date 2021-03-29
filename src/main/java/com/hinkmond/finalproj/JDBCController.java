@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.fasterxml.jackson.databind.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.*;
 
 import java.util.*;
 import java.io.*;
@@ -42,9 +44,10 @@ public class JDBCController {
 
         String crypto = updateCryptoData.getSymbol();
         // Only BCH, BTC, ETH, LTC are supported in this app.
-        if (!(crypto.equals("BCH") || crypto.equals("BTC") || crypto.equals("ETH") || crypto.equals("LTC")))
-            return "Only BCH -- Bitcoin Cash, BTC -- Bitcoin, ETH -- Ethereum and LTC -- Litecoin are supported in this app.";
-
+        if (!(crypto.equals("BCH") || crypto.equals("BTC") || crypto.equals("ETC")|| crypto.equals("ETH") || crypto.equals("LTC"))) {
+            String reasonMsg = "Only BCH -- Bitcoin Cash, BTC -- Bitcoin, ETC -- Ethereum Classic, ETH -- Ethereum and LTC -- Litecoin are supported in this app.";
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, reasonMsg);
+        }
         URL url = new URL("https://api.nomics.com/v1/currencies/sparkline?key=8427cbef660536f213a6b2d5706a4a27&ids="
                 + crypto + "&start=2021-03-25T00%3A00%3A00Z");
 
