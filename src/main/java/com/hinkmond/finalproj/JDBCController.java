@@ -20,6 +20,16 @@ public class JDBCController {
     private final static String KEYFILEPATH = "./keyFile.key";
 
     @CrossOrigin
+    @RequestMapping(value = "/helloworld", method = RequestMethod.GET)
+    public String printCryptTest() {
+        AESUtils aesUtils = new AESUtils();
+
+        String encryptedStr = aesUtils.encrypt("Hello World!", KEYFILEPATH);
+        return ("Decrypt = " + aesUtils.decrypt(encryptedStr, KEYFILEPATH));
+    }
+
+    @CrossOrigin
+    @SuppressWarnings("SqlResolve")
     @RequestMapping(value = "/printAllCrypto", method = RequestMethod.GET)
     public String printAllUsers() {
         JdbcTemplate jdbcTemplate = JDBCConnector.getJdbcTemplate();
@@ -38,6 +48,7 @@ public class JDBCController {
     }
 
     @CrossOrigin
+    @SuppressWarnings("SqlResolve")
     @RequestMapping(value = "/updateCryptoPrice", method = RequestMethod.POST)
     public String updateLatest(@RequestBody UpdateCryptoData updateCryptoData) throws IOException {
         // https://nomics.com/docs/
